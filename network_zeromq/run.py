@@ -22,9 +22,33 @@ print ("""Loaded zmq.
 """ % (zmq.zmq_version(), zmq.pyzmq_version()))
 
 
+######################
+# NetworkNode
+######################
+
+class NetworkNode(Node):
+    """ROS Node for communicating over network."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the node."""
+        super(NetworkNode, self).__init__(*args, **kwargs)
+
+
+    # TODO: Callback on a topic, send data over network.
+
+
+    # TODO: Thread reading data from network, publishing to the topic.
+
+
+######################
+# Main
+######################
+
 if __name__ == "__main__":
+    # TODO: Handle arguments
+
     Core.init(args = sys.argv)
 
-    n = Node("network_zeromq")
+    n = NetworkNode("network_zeromq")
 
     Core.spin(n)
