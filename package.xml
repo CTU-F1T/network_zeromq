@@ -31,6 +31,7 @@
   <exec_depend condition="$ROS_VERSION == 2">rclpy</exec_depend>
 
   <exec_depend version_gte="0.10.0">autopsy</exec_depend>
+  <exec_depend>zeromq3</exec_depend>
 
   <!-- Any other parameters can be stored here. -->
   <export>

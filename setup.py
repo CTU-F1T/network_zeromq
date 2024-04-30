@@ -18,6 +18,7 @@ setup(
         ("share/" + package_name, ["package.xml"]),
     ],
     install_requires=[
+        "pyzmq",
     ],
     zip_safe = True,
     maintainer = "F1tenth CTU Community",
