@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>network_zeromq</name>
+  <version>0.0.0</version>
+  <description>Node for sending messages over network..</description>
+
+  <!-- Let's keep maintainer to this so we do not have to change it all the time. -->
+  <maintainer email="f1tenth@rtime.felk.cvut.cz">F1tenth CTU Community</maintainer>
+
+  <!-- License is set to GPLv3. -->
+  <!-- LICENSE file can be attached as well using 'file' attribute. However, it does not work now? -->
+  <license>GPLv3</license>
+
+  <!-- ANYTHING BELOW THIS POINT IS OPTIONAL IN THE EYES OF ROS. -->
+
+  <!-- Feel free to write your name here! Email is optional. -->
+  <author email="klapajar@fel.cvut.cz">Jaroslav Klapálek</author>
+
+  <!-- There are 3 types: website (reserved for our future site), bugtracker and repository. Use at least the last one. -->
+  <url type="repository">https://github.com/CTU-F1T/network_zeromq</url>
+
+  <!-- Build tool. For ROS1 leave this here. -->
+  <buildtool_depend condition="$ROS_VERSION == 1">catkin</buildtool_depend>
+
+  <!-- Packages dependencies. -->
+  <!-- Use exec_depend for Python dependencies, as the packages are required only when running. -->
+  <exec_depend condition="$ROS_VERSION == 1">rospy</exec_depend>
+  <exec_depend condition="$ROS_VERSION == 2">rclpy</exec_depend>
+
+  <exec_depend version_gte="0.10.0">autopsy</exec_depend>
+
+  <!-- Any other parameters can be stored here. -->
+  <export>
+    <!-- Additional parameters for Index. Add repository url (SSH) here, as private repositories are not reachable by HTTPS. -->
+    <index url="git@github.com:CTU-F1T/network_zeromq.git" />
+    <!-- ROS1 Build type -->
+    <!-- Should not be required (as ROS1 defaults to catkin), but with the other dependency it is completely lost. -->
+    <build_type condition="$ROS_VERSION == 1">catkin</build_type>
+    <!-- ROS2 Build type -->
+    <build_type condition="$ROS_VERSION == 2">ament_python</build_type>
+  </export>
+
+</package>
