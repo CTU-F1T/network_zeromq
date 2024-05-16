@@ -19,6 +19,8 @@ import zmq
 
 import argparse
 
+import threading
+
 from std_msgs.msg import String
 
 print ("""Loaded zmq.
@@ -118,11 +120,24 @@ class NetworkNode(Node):
             "tcp://%s:%d" % (remote_ip, remote_port)
         )
 
-        # Create topic for obtaining data
+
+        # Create topics for handling data
         self.create_subscription(
             String, "/network/send", self.callback_send,
             qos_profile = QoSProfile(depth = 1)
         )
+
+        self.pub_data = self.create_publisher(
+            String, "/network/receive",
+            qos_profile = QoSProfile(depth = 1)
+        )
+
+
+        # Initialize and set threading
+        self.publisher = threading.Thread(
+            target = self.publisher_thread
+        )
+        self.publisher.start()
 
     #
     # Callbacks #
@@ -137,8 +152,17 @@ class NetworkNode(Node):
         self.loginfo("Sending data: '%s'" % data.data)
         self.socket_dout.send(data.data)
 
+    #
+    # Thread #
+    def publisher_thread(self):
+        """Receive data from network and publish them to ROS."""
+        while True:
+            data = self.socket_din.recv()
 
-    # TODO: Thread reading data from network, publishing to the topic.
+            self.loginfo("Received data: '%s'" % data)
+            self.pub_data.publish(
+                String(data = data)
+            )
 
 
 ######################
@@ -157,3 +181,5 @@ if __name__ == "__main__":
     )
 
     Core.spin(n)
+
+    Core.shutdown()
