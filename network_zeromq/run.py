@@ -105,13 +105,13 @@ class NetworkNode(Node):
         # Initialize and set the ZeroMQ
         self.context = zmq.Context()
 
-        self.socket_din = self.context.socket(zmq.REQ)
+        self.socket_din = self.context.socket(zmq.PULL)
         self.socket_din.connect(
             "tcp://%s:%d" % (ip_address, port)
         )
 
-        self.socket_dout = self.context.socket(zmq.REP)
-        self.socket_dout.bind(
+        self.socket_dout = self.context.socket(zmq.PUSH)
+        self.socket_dout.connect(
             "tcp://%s:%d" % (remote_ip, remote_port)
         )
 
