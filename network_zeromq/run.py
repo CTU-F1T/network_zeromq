@@ -157,7 +157,7 @@ class NetworkNode(Node):
     def publisher_thread(self):
         """Receive data from network and publish them to ROS."""
         while True:
-            data = self.socket_din.recv()
+            data = self.socket_din.recv_string()
 
             self.loginfo("Received data: '%s'" % data)
             self.pub_data.publish(
