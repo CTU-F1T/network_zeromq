@@ -71,9 +71,49 @@ PARSER.add_argument(
 class NetworkNode(Node):
     """ROS Node for communicating over network."""
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the node."""
+    # ZeroMQ variables
+    context = None
+    socket_din = None
+    socket_dout = None
+
+
+    def __init__(
+        self,
+        ip_address, port,
+        remote_ip, remote_port,
+        *args, **kwargs
+    ):
+        """Initialize the node.
+
+        This creates a ROS node and defines two sockets; one local to obtain
+        data (`ip_address` and `port`) and one to a remote device to send
+        data to.
+
+        Arguments
+        ---------
+        ip_address: str
+            IP address of this computer (used to select interface)
+        port: int
+            port number of the locally opened socket
+        remote_ip: str
+            IP address of the remote device
+        remote_port: int
+            port number of the remote device
+        """
         super(NetworkNode, self).__init__(*args, **kwargs)
+
+        # Initialize and set the ZeroMQ
+        self.context = zmq.Context()
+
+        self.socket_din = self.context.socket(zmq.REQ)
+        self.socket_din.connect(
+            "tcp://%s:%d" % (ip_address, port)
+        )
+
+        self.socket_dout = self.context.socket(zmq.REP)
+        self.socket_dout.bind(
+            "tcp://%s:%d" % (remote_ip, remote_port)
+        )
 
 
     # TODO: Callback on a topic, send data over network.
@@ -91,6 +131,10 @@ if __name__ == "__main__":
 
     Core.init(args = sys.argv)
 
-    n = NetworkNode("network_zeromq")
+    n = NetworkNode(
+        name = "network_zeromq",
+        ip_address = args.ip_address, port = args.port,
+        remote_ip = args.remote_ip, remote_port = args.remote_port
+    )
 
     Core.spin(n)
