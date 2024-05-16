@@ -111,7 +111,7 @@ class NetworkNode(Node):
         self.context = zmq.Context()
 
         self.socket_din = self.context.socket(zmq.PULL)
-        self.socket_din.connect(
+        self.socket_din.bind(  # One side has to be bound!
             "tcp://%s:%d" % (ip_address, port)
         )
 
