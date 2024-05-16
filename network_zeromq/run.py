@@ -150,7 +150,7 @@ class NetworkNode(Node):
             data to be send over network
         """
         self.loginfo("Sending data: '%s'" % data.data)
-        self.socket_dout.send(data.data)
+        self.socket_dout.send_string(data.data)
 
     #
     # Thread #
