@@ -13,10 +13,13 @@ import sys
 
 from autopsy.core import Core
 from autopsy.node import Node
+from autopsy.qos import QoSProfile
 
 import zmq
 
 import argparse
+
+from std_msgs.msg import String
 
 print ("""Loaded zmq.
 \tZeroMQ version: %s
@@ -115,8 +118,24 @@ class NetworkNode(Node):
             "tcp://%s:%d" % (remote_ip, remote_port)
         )
 
+        # Create topic for obtaining data
+        self.create_subscription(
+            String, "/network/send", self.callback_send,
+            qos_profile = QoSProfile(depth = 1)
+        )
 
-    # TODO: Callback on a topic, send data over network.
+    #
+    # Callbacks #
+    def callback_send(self, data):
+        """Send data over network.
+
+        Arguments
+        ---------
+        data: std_msgs/String
+            data to be send over network
+        """
+        self.loginfo("Sending data: '%s'" % data.data)
+        self.socket_dout.send(data.data)
 
 
     # TODO: Thread reading data from network, publishing to the topic.
