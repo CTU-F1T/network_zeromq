@@ -169,7 +169,8 @@ class NetworkNode(Node):
 # Main
 ######################
 
-if __name__ == "__main__":
+def main():
+    """Main function."""
     args, other = PARSER.parse_known_args()
 
     Core.init(args = sys.argv)
@@ -183,3 +184,7 @@ if __name__ == "__main__":
     Core.spin(n)
 
     Core.shutdown()
+
+
+if __name__ == "__main__":
+    main()
