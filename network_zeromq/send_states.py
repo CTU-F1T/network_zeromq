@@ -144,6 +144,12 @@ class StateNetworkNode(NetworkNode):
     # Timer #
     def timer_send_data(self, *args, **kwargs):
         """Send current states of the network."""
+        if self.last_odom is None:
+            self.logerr(
+                "Unable to send data as Odometry is not yet received."
+            )
+            return
+
         self.socket_dout.send_string(
             ",".join(["%s" % val for val in [
                 self.last_odom.pose.pose.position.x,
