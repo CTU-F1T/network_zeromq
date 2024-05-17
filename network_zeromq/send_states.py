@@ -105,6 +105,11 @@ class StateNetworkNode(NetworkNode):
                 )
             )
 
+        # Create timer
+        self.create_timer(
+            rate, timer_send_data
+        )
+
     #
     # Callbacks #
     def callback_send(self, data):
