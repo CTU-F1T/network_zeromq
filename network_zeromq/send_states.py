@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# run.py
+# send_states.py
 """Run a ROS node for network communication.
 
 Successor of 'network_communication'. Unfortunately, this one (because of ROS2)
@@ -35,6 +35,20 @@ except ImportError:
     print ("Unable to import 'vesc_msgs.msg'. Speed will not be recorded.")
     USE_VESC = False
 
+
+PARSER.prog = "send_states.py"
+PARSER.description += """
+This script is sending internal odom/speed states.
+
+Data is send in following format:
+
+    px,py,ox,oy,oz,ow,v
+
+px -- x-position of the car, [m]
+py -- y-position of the car, [m]
+o* -- quaternion of the car
+v  -- velocity of the car, [m.s^-1]
+"""
 
 PARSER.add_argument(
     "period",
