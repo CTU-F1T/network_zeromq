@@ -147,12 +147,12 @@ class StateNetworkNode(NetworkNode):
         """Send current states of the network."""
         self.socket_dout.send_string(
             ",".join(["%s" % val for val in [
-                self.last_odom.position.x,
-                self.last_odom.position.y,
-                self.last_odom.orientation.x,
-                self.last_odom.orientation.y,
-                self.last_odom.orientation.z,
-                self.last_odom.orientation.w,
+                self.last_odom.pose.pose.position.x,
+                self.last_odom.pose.pose.position.y,
+                self.last_odom.pose.pose.orientation.x,
+                self.last_odom.pose.pose.orientation.y,
+                self.last_odom.pose.pose.orientation.z,
+                self.last_odom.pose.pose.orientation.w,
                 self.last_speed
             ]])
         )
