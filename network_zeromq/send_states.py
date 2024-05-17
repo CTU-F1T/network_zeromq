@@ -37,12 +37,12 @@ except ImportError:
 
 
 PARSER.add_argument(
-    "rate",
+    "period",
 
-    help = "frequency of sending the odom/speed data, %%d",
+    help = "period of sending the odom/speed data, [s], %%d",
     type = int,
     default = 0,
-    metavar = "RATE",
+    metavar = "PERIOD",
 )
 
 
@@ -59,7 +59,7 @@ class StateNetworkNode(NetworkNode):
 
     def __init__(
         self,
-        rate,
+        period,
         *args, **kwargs
     ):
         """Initialize the node.
@@ -78,8 +78,8 @@ class StateNetworkNode(NetworkNode):
             IP address of the remote device
         remote_port: int
             port number of the remote device
-        rate: int
-            frequency to send odom/speed over network
+        period: int
+            [s], period of sending odom/speed over network
         """
         super(StateNetworkNode, self).__init__(*args, **kwargs)
 
@@ -107,7 +107,7 @@ class StateNetworkNode(NetworkNode):
 
         # Create timer
         self.create_timer(
-            rate, self.timer_send_data
+            period, self.timer_send_data
         )
 
     #
@@ -172,7 +172,7 @@ def main():
         name = "network_zeromq",
         ip_address = args.ip_address, port = args.port,
         remote_ip = args.remote_ip, remote_port = args.remote_port,
-        rate = args.rate
+        period = args.period
     )
 
     Core.spin(n)
