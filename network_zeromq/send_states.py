@@ -39,9 +39,8 @@ except ImportError:
 PARSER.add_argument(
     "period",
 
-    help = "period of sending the odom/speed data, [s], %%d",
-    type = int,
-    default = 0,
+    help = "period of sending the odom/speed data, [s], %%f",
+    type = float,
     metavar = "PERIOD",
 )
 
