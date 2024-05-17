@@ -107,7 +107,7 @@ class StateNetworkNode(NetworkNode):
 
         # Create timer
         self.create_timer(
-            rate, timer_send_data
+            rate, self.timer_send_data
         )
 
     #
