@@ -77,7 +77,7 @@ class NetworkNode(Node):
     """ROS Node for communicating over network."""
 
     # ZeroMQ variables
-    context = None
+    zmq_context = None
     socket_din = None
     socket_dout = None
 
@@ -108,14 +108,14 @@ class NetworkNode(Node):
         super(NetworkNode, self).__init__(*args, **kwargs)
 
         # Initialize and set the ZeroMQ
-        self.context = zmq.Context()
+        self.zmq_context = zmq.Context()
 
-        self.socket_din = self.context.socket(zmq.PULL)
+        self.socket_din = self.zmq_context.socket(zmq.PULL)
         self.socket_din.bind(  # One side has to be bound!
             "tcp://%s:%d" % (ip_address, port)
         )
 
-        self.socket_dout = self.context.socket(zmq.PUSH)
+        self.socket_dout = self.zmq_context.socket(zmq.PUSH)
         self.socket_dout.connect(
             "tcp://%s:%d" % (remote_ip, remote_port)
         )
