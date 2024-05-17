@@ -28,7 +28,8 @@ setup(
     tests_require = ["pytest"],
     entry_points = {
         "console_scripts": [
-            "run = %s.run:main" % package_name
+            "run = %s.run:main" % package_name,
+            "send_states = %s.send_states:main" % package_name
         ],
     },
 )
